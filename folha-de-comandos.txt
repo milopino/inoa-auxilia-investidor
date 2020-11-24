@@ -1,0 +1,27 @@
+Front Angular
+
+npm install -g @angular/cli
+ng new my-dream-app
+cd my-dream-app
+ng serve
+ng generate service api
+ng generate component ativos-detalhes
+
+
+Back Django
+
+# Criação do primeiro app
+django-admin startproject myproject
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py runserver 8080
+python manage.py startapp appname
+
+pip install Pillow
+
+# Após definir os models que serão utilizados
+python manage.py makemigrations
+python manage.py migrate
+
+# Instalação da biblioteca que permite acessar serviço do mesmo local
+pip install django-cors-headers

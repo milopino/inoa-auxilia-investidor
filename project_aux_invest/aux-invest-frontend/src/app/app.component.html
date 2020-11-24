@@ -1,0 +1,9 @@
+<h1>Carteira de acompanhamento</h1>
+
+<ul>
+  <li *ngFor="let ativo of ativos" (click)="ativoClicado(ativo)">
+    {{ ativo.nome_ativ }} - {{ ativo.sigla }} - R$ {{ ativo.preco }}
+  </li>
+</ul>
+
+<router-outlet></router-outlet>
