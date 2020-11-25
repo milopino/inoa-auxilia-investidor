@@ -28,4 +28,21 @@ export class ApiService {
     return this.http.get(this.baseUrl + 'ativos/' + id + '/',
     {headers: this.httpHeaders});
   };
+
+  // Atualizar informações do Ativo
+  atualizarAtivo(ativo) : Observable<any> {
+    return this.http.put(this.baseUrl + 'ativos/' + ativo.id + '/', ativo,
+    {headers: this.httpHeaders});
+  };
+
+  // Cadastrar um novo ativo
+  salvarAtivo(ativo) : Observable<any> {
+    return this.http.post(this.baseUrl + 'ativos/' , ativo,
+    {headers: this.httpHeaders});
+  };
+
+  excluirAtivo(id) : Observable<any> {
+    return this.http.delete(this.baseUrl + 'ativos/' + id + '/',
+    {headers: this.httpHeaders});
+  }
 }

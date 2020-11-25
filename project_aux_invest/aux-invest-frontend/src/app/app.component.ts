@@ -1,5 +1,6 @@
 import { ApiService } from './api.service';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,7 @@ export class AppComponent {
     {nome_ativ: 'Ativo 3', sigla: TSTE3, PRECO: 10.01"},
   ]*/
 
-  constructor(private api:ApiService) {
+  constructor(private api:ApiService, private router: Router) {
     this.getAtivos();
   }
 
@@ -45,14 +46,6 @@ export class AppComponent {
   };
 
   ativoClicado = (ativo) => {
-    this.api.getAtivo(ativo.id).subscribe(
-      data => {
-        console.log(data);
-        //this.ativo_selecionado = data;
-      },
-      error => {
-        console.log("Erro no serviço:", error.message);
-      }
-    );
+    this.router.navigate(['ativo-detalhe', ativo.id]);
   };
 }

@@ -1,2 +1,12 @@
 <h1>Detalhe do Ativo:</h1>
-Ativo: {{ ativo_selecionado }}
+Ativo: {{ ativo_selecionado.nome_ativ }}
+
+<!--<input type="text" [(ngModel)]="ativo_selecionado.id" readonly>-->
+<input type="text" [(ngModel)]="ativo_selecionado.nome_ativ">
+<input type="text" [(ngModel)]="ativo_selecionado.sigla">
+<input type="text" [(ngModel)]="ativo_selecionado.preco">
+<button (click)="atualizarAtivo()">Atualizar Ativo</button>
+<button (click)="excluirAtivo()">Excluir Ativo</button>
+
+<button (click)="novoAtivo()">Novo Ativo</button>
+
