@@ -125,6 +125,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = "patrickantunessantos@gmail.com"
+EMAIL_HOST_PASSWORD = "Galaxy1*"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:4200"
 ]

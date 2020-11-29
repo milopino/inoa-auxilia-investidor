@@ -1,4 +1,5 @@
 from rest_framework import viewsets
+from rest_framework.decorators import action
 from .models import Investidor, Ativo, Carteira, historicoAtivo
 from .serializers import InvestidorSerializer ,AtivoSerializer, CarteiraSerializer, historicoAtivoSerializer
 
@@ -17,4 +18,3 @@ class CarteiraViewSet(viewsets.ModelViewSet):
 class historicoAtivoViewSet(viewsets.ModelViewSet):
     queryset = historicoAtivo.objects.all()
     serializer_class = historicoAtivoSerializer
-

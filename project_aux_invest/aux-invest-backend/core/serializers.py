@@ -1,8 +1,17 @@
 from rest_framework import serializers
 import yahoo_fin.stock_info as si
-from datetime import datetime
 import pandas as pd
 from .models import Investidor, Ativo, Carteira, historicoAtivo
+from django.core.mail import send_mail
+
+def enviar_email(corpo_email, email_para):
+    send_mail(
+        'Alerta de Ativo - INOA',
+        corpo_email,
+        email_para,
+        [email_para],
+        fail_silently=False
+    )
 
 class InvestidorSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(source='user.first_name')
@@ -33,6 +42,18 @@ class AtivoSerializer(serializers.ModelSerializer):
         instance.lim_sup = validated_data.get('lim_sup', instance.lim_sup)
         instance.lim_inf = validated_data.get('lim_inf', instance.lim_inf)
 
+        #Envio de alerta para o e-mail
+        if instance.lim_sup <= instance.preco:
+            corpo_email = 'O Ativo ' + instance.nome_ativ + ' por sigla ' + instance.sigla + ' ultrapassou o limite superior definido. \nAlerta com sugestão de venda'
+            enviar_email(corpo_email, instance.carteira.investidor.user.email)
+            print("Valor ultrapassou o limite superior.")
+        elif instance.lim_inf >= instance.preco:
+            corpo_email = 'O Ativo ' + instance.nome_ativ + ' por sigla ' + instance.sigla + ' ultrapassou o limite inferior definido. \nAlerta com sugestão de compra'
+            enviar_email(corpo_email, instance.carteira.investidor.user.email)
+            print("Valor ultrapassou o limite inferior.")
+        else:
+            print("Valor dentro dos limites")
+
         instance.save()
 
         return instance
@@ -54,8 +75,6 @@ class historicoAtivoSerializer(serializers.ModelSerializer):
         #Buscando as informações do histórico do ativo no Yahho Finance
         data_texto = pd.to_datetime(instance.data) + pd.DateOffset(days=1)
         historico = si.get_data(instance.ativo.sigla + '.sa', start_date=instance.data, end_date=data_texto)
-        print(instance.data)
-        print(type(instance.data))
 
         instance.adj_close = round(historico.iloc[0,4], 2)
         instance.close = round(historico.iloc[0,3], 2)
@@ -66,9 +85,19 @@ class historicoAtivoSerializer(serializers.ModelSerializer):
         instance.save()
 
         return instance
+    
+    def update(self, instance, validated_data):
+        #Buscando as informações do histórico do ativo no Yahho Finance
+        data_texto = pd.to_datetime(instance.data) + pd.DateOffset(days=1)
+        historico = si.get_data(instance.ativo.sigla + '.sa', start_date=instance.data, end_date=data_texto)
 
+        instance.data = validated_data.get('data', instance.data)
+        instance.close = round(historico.iloc[0,3], 2)
+        instance.High = round(historico.iloc[0,1], 2)
+        instance.Low = round(historico.iloc[0,2], 2)
+        instance.Open = round(historico.iloc[0,0], 2)
+        instance.Volume = round(historico.iloc[0,5], 2)
 
-#data = datetime.strptime(data, '%d/%m/%Y').date()
-#data_texto = data.strftime('%d/%m/%Y')
-#data = datetime.strptime(instance.data, '%d/%m/%Y')
-#instance.data = data
+        instance.save()
+
+        return instance
