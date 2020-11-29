@@ -26,3 +26,7 @@ python manage.py migrate
 
 # Instalação da biblioteca que permite acessar serviço do mesmo local
 pip install django-cors-headers
+
+#Instalação das bibliotecas de consulta financeira
+pip install yfinance
+pip install yahoo_fin
