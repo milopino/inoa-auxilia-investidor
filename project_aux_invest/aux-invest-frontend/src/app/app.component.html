@@ -1,9 +1,75 @@
-<h1>Carteira de acompanhamento</h1>
+<!-- Nav -->
+<nav id="nav">
+  <ul>
+    <li><a href="#perfilDoInvestidor" class="active">Perfil do Investidor</a></li>
+    <li><a href="#carteira">Carteira</a></li>
+    <li><a href="#historicoAtivo">Histórico do Ativo</a></li>
+  </ul>
+</nav>
 
-<ul>
-  <li *ngFor="let ativo of ativos" (click)="ativoClicado(ativo)">
-    {{ ativo.nome_ativ }} - {{ ativo.sigla }} - R$ {{ ativo.preco }}
-  </li>
-</ul>
+<!-- Main -->
+<div id="main">
 
-<router-outlet></router-outlet>
+  <!-- Perfil do Investidor -->
+    <section id="perfilDoInvestidor" class="main">
+      <div class="spotlight">
+        <div class="content">
+          <app-perfil-investidor></app-perfil-investidor>
+        </div>
+        <span class="image"><img src="assets/images/pic01.jpg" alt="" /></span>
+      </div>
+    </section>
+
+  <!-- Carteira -->
+    <section id="carteira" class="main special">
+      <header class="major">
+        <h2>Carteira</h2>
+        <p>Acompanhe e configure os Ativos que se de acordo com o seu perfil de investidor,<br />
+        configurando os limites superior e inferior do preço de cada Ativo.</p>
+              </header>
+              <section>
+                <h3>Ativos</h3>
+                <div class="table-wrapper">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Nome</th>
+                        <th>Sigla</th>
+                        <th>Preço</th>
+                        <th>Lim. Superior</th>
+                        <th>Lim. Inferior</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let ativo of ativos" (click)="ativoClicado(ativo)">
+                        <td align="left">{{ ativo.nome_ativ }}</td>
+                        <td align="left">{{ ativo.sigla }}</td>
+                        <td align="left">R$ {{ ativo.preco }}</td>
+                        <td align="left">R$ {{ ativo.lim_sup }}</td>
+                        <td align="left">R$ {{ ativo.lim_inf }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+              <router-outlet></router-outlet>
+      <p class="content"></p>
+      <footer class="major">
+      </footer>
+    </section>
+  <!-- Histórico do Ativo -->
+    <section id="historicoAtivo" class="main special">
+      <header class="major">
+        <h2>Histórico do Ativo</h2>
+        <p>Acompanhe as principais informações referentes ao Ativo selecionado<br />
+        ao longo do tempo.</p>
+      </header>
+      <footer class="major">
+        <ul class="actions special">
+          <li><a href="generic.html" class="button primary">Get Started</a></li>
+          <li><a href="generic.html" class="button">Learn More</a></li>
+        </ul>
+      </footer>
+    </section>
+
+</div>

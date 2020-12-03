@@ -1,12 +1,36 @@
-<h1>Detalhe do Ativo:</h1>
-Ativo: {{ ativo_selecionado.nome_ativ }}
-
-<!--<input type="text" [(ngModel)]="ativo_selecionado.id" readonly>-->
-<input type="text" [(ngModel)]="ativo_selecionado.nome_ativ">
-<input type="text" [(ngModel)]="ativo_selecionado.sigla">
-<input type="text" [(ngModel)]="ativo_selecionado.preco">
-<button (click)="atualizarAtivo()">Atualizar Ativo</button>
-<button (click)="excluirAtivo()">Excluir Ativo</button>
-
-<button (click)="novoAtivo()">Novo Ativo</button>
-
+<h1>Edição do Ativo</h1>
+    <!--<input type="text" [(ngModel)]="ativo_selecionado.id" readonly>-->
+    
+    <div class="row gtr-uniform">
+        <div class="col-6 col-12-xsmall">
+            <input type="text" name="nome_ativ" id="nome_ativ" value placeholder="Nome do Ativo" [(ngModel)]="ativo_selecionado.nome_ativ">
+        </div>
+        <div class="col-6 col-12-xsmall">
+            <input type="text" name="sigla" id="sigla" value placeholder="Sigla do Ativo" [(ngModel)]="ativo_selecionado.sigla">
+        </div>
+        <div class="col-6 col-12-xsmall">
+            <input type="text" name="lim_sup" id="lim_sup" value placeholder="Limite superior do Ativo" [(ngModel)]="ativo_selecionado.lim_sup">
+        </div>
+        <div class="col-6 col-12-xsmall">
+            <input type="text" name="lim_inf" id="lim_inf" value placeholder="Limite inferior do Ativo" [(ngModel)]="ativo_selecionado.lim_inf">
+        </div>
+        <div class="col-12">
+            <select name="carteira-associada" id="carteira-associada">
+                <option value="{{ ativo_selecionado.carteira }}">ID: {{ ativo_selecionado.carteira }}</option>
+                <option *ngFor="let carteira of carteiras" value="{{ carteira.id }}">ID: {{ carteira.id }} -  Nome: {{ carteira.nome_cart }}</option>
+            </select>
+        </div>
+        <div class="col-12">
+            <ul class="actions">
+                <li>
+                    <button (click)="atualizarAtivo()">Atualizar Ativo</button>
+                </li>
+                <li>
+                    <button (click)="novoAtivo()" class="button primary">Novo Ativo</button>
+                </li>
+                <li>
+                    <button (click)="excluirAtivo()">Excluir Ativo</button>
+                </li>
+            </ul>
+        </div>
+    </div>

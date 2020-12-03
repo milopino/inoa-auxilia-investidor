@@ -1,6 +1,32 @@
 <h1>Novo Ativo:</h1>
 
-<input type="text" [(ngModel)]="ativo.nome_ativ">
-<input type="text" [(ngModel)]="ativo.sigla">
-<input type="text" [(ngModel)]="ativo.preco">
-<button (click)="salvarAtivo()">Cadastrar Ativo</button>
+    <div class="row gtr-uniform">
+        <div class="col-6 col-12-xsmall">
+            <input type="text" name="nome_ativ" id="nome_ativ" placeholder="Nome do Ativo" [(ngModel)]="ativo.nome_ativ">
+        </div>
+        <div class="col-6 col-12-xsmall">
+            <input type="text" name="sigla" id="sigla" placeholder="Sigla do Ativo" [(ngModel)]="ativo.sigla">
+        </div>
+        <div class="col-6 col-12-xsmall">
+            <input type="text" name="lim_sup" id="lim_sup" placeholder="Limite superior do Ativo" [(ngModel)]="ativo.lim_sup">
+        </div>
+        <div class="col-6 col-12-xsmall">
+            <input type="text" name="lim_inf" id="lim_inf" placeholder="Limite inferior do Ativo" [(ngModel)]="ativo.lim_inf">
+        </div>
+        <div class="col-12">
+            <select name="carteira-associada" id="carteira-associada" type="number" [(ngModel)]="ativo.carteira">
+                <option value>- Carteira associada -</option>
+                <option *ngFor="let carteira of carteiras" [ngValue]="carteira.id">ID: {{ carteira.id }} -  Nome: {{ carteira.nome_cart }}</option>
+            </select>
+        </div>
+        <div class="col-12">
+            <ul class="actions">
+                <li>
+                    <button (click)="salvarAtivo()" class="button primary">Cadastrar Ativo</button>
+                </li>
+                <li>
+                    <button (click)="cancelarNovoAtivo()">Cancelar</button>
+                </li>
+            </ul>
+        </div>
+    </div>

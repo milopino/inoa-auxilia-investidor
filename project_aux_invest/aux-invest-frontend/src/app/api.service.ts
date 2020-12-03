@@ -17,9 +17,21 @@ export class ApiService {
     {headers: this.httpHeaders});
   };
 
+  // Buscando as informações de um único investidor
+  getInvestidor(id) : Observable<any> {
+    return this.http.get(this.baseUrl + 'investidores/' + id + '/',
+    {headers: this.httpHeaders});
+  };
+
   // Buscando todos os ativos cadastrados via serviço
   getAllAtivos() : Observable<any> {
     return this.http.get(this.baseUrl + 'ativos/',
+    {headers: this.httpHeaders});
+  };
+
+  // Buscando todos as carteiras cadastradas via serviço
+  getAllCarteiras() : Observable<any> {
+    return this.http.get(this.baseUrl + 'carteiras/',
     {headers: this.httpHeaders});
   };
 

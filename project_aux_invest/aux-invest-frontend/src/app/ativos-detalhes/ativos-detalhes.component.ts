@@ -9,13 +9,16 @@ import { ApiService } from './../api.service';
   styleUrls: ['./ativos-detalhes.component.css']
 })
 export class AtivosDetalhesComponent implements OnInit {
-  ativo_selecionado = {nome_ativ: '', sigla: '', preco: null}
+  ativo_selecionado = {nome_ativ: '', sigla: '', preco: null, lim_sup: null, lim_inf: null, carteira: null}
   id_selecionado;
+  carteiras = []
 
   constructor(private route: ActivatedRoute, 
               private api: ApiService, 
               private router: Router, 
-              private appComponent: AppComponent) { }
+              private appComponent: AppComponent) { 
+    this.getCarteiras();
+  }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((param: ParamMap) => {
@@ -49,7 +52,7 @@ export class AtivosDetalhesComponent implements OnInit {
 
   novoAtivo() {
     this.router.navigate(['novo-ativo']);
-  }
+  };
 
   excluirAtivo() {
     this.api.excluirAtivo(this.id_selecionado).subscribe(
@@ -66,6 +69,17 @@ export class AtivosDetalhesComponent implements OnInit {
       error => {
         console.log("Erro no serviço:", error.message);
       }
-    )
-  }
+    );
+  };
+
+  getCarteiras = () => {
+    this.api.getAllCarteiras().subscribe(
+      data => {
+        this.carteiras = data
+      },
+      error => {
+        console.log("Erro no serviço:", error.message);
+      }
+    );
+  };
 }

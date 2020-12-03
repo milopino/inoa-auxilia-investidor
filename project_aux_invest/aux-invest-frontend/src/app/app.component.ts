@@ -1,6 +1,6 @@
 import { ApiService } from './api.service';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +10,9 @@ import { Router } from '@angular/router';
 export class AppComponent {
   title = 'aux-invest-frontend';
   ativos = []
-  investidores = []
+  carteiras = []
+  investidor_selecionado = {first_name: '', last_name: '', email: '', password: ''}
+  id_selecionado;
   
   /* Exemplo de vetor de ativos
   ativos = [
@@ -19,14 +21,32 @@ export class AppComponent {
     {nome_ativ: 'Ativo 3', sigla: TSTE3, PRECO: 10.01"},
   ]*/
 
-  constructor(private api:ApiService, private router: Router) {
+  constructor(private api:ApiService, private router: Router, private route: ActivatedRoute) {
     this.getAtivos();
+    this.getCarteiras();
   }
 
-  getInvestidores = () => {
-    this.api.getAllInvestidores().subscribe(
+  ngOnInit(): void {
+      let id = 1;
+      this.id_selecionado = id;
+      this.carregarInvestidor(id);
+  }
+
+  carregarInvestidor(id) {
+    this.api.getInvestidor(id).subscribe(
+      data =>   {
+        this.investidor_selecionado = data;
+      },
+      error => {
+        console.log("Erro no serviço:", error.message);
+      }
+    );
+  };
+
+  getCarteiras = () => {
+    this.api.getAllCarteiras().subscribe(
       data => {
-        this.investidores = data
+        this.carteiras = data
       },
       error => {
         console.log("Erro no serviço:", error.message);

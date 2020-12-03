@@ -6,7 +6,8 @@ cd my-dream-app
 ng serve
 ng generate service api
 ng generate component ativos-detalhes
-ng generate componet novo-ativo
+ng generate component novo-ativo
+ng generate component perfil-investidor
 
 
 Back Django
